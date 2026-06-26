@@ -2,21 +2,46 @@
 
 {% block content %}
 
-<h1>Create Account</h1>
+<div class="login-container">
 
-<div class="panel">
+<div class="login-card">
 
-<form>
+<h1>
 
-<input type="text" placeholder="Company">
+Registrar Empresa
 
-<input type="email" placeholder="Email">
+</h1>
 
-<input type="password" placeholder="Password">
+<form method="POST">
 
-<button>Create Account</button>
+<input
+name="company"
+placeholder="Empresa"
+required>
+
+<input
+name="email"
+type="email"
+placeholder="Correo"
+required>
+
+<input
+name="phone"
+placeholder="Teléfono">
+
+<input
+name="country"
+placeholder="País">
+
+<button>
+
+Registrar
+
+</button>
 
 </form>
+
+</div>
 
 </div>
 
