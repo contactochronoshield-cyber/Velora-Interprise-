@@ -1,0 +1,114 @@
+.
+├── CHANGELOG.md
+├── CONTRIBUTING.md
+├── Dockerfile
+├── LICENSE
+├── PROJECT_TREE.txt
+├── README.md
+├── admin.py
+├── agent_termux.py
+├── api
+│   ├── __init__.py
+│   ├── alerts.py
+│   ├── auth.py
+│   ├── customers.py
+│   ├── devices.py
+│   ├── monitoring.py
+│   ├── reports.py
+│   ├── rest.py
+│   ├── security.py
+│   ├── settings.py
+│   ├── users.py
+│   └── vch777.py
+├── app.py
+├── assets
+├── backups
+│   ├── daily
+│   ├── monthly
+│   └── weekly
+├── certs
+├── config
+│   ├── __init__.py
+│   ├── database.py
+│   ├── security.py
+│   └── settings.py
+├── controllers
+│   ├── dashboard.py
+│   ├── devices.py
+│   └── login.py
+├── database
+│   └── velora.db
+├── docker
+│   ├── Dockerfile
+│   └── docker-compose.yml
+├── docker-compose.yml
+├── docs
+├── gunicorn.conf.py
+├── install_velora_enterprise_v2.sh
+├── logs
+│   ├── access.log
+│   ├── api.log
+│   ├── auth.log
+│   ├── devices.log
+│   ├── monitoring.log
+│   ├── security.log
+│   ├── system.log
+│   ├── vch777.log
+│   └── velora.log
+├── models
+│   ├── customer.py
+│   ├── device.py
+│   ├── log.py
+│   └── user.py
+├── nginx
+│   └── velora.conf
+├── node-agent
+│   └── agent.py
+├── production
+│   ├── deploy.sh
+│   ├── install.sh
+│   └── update.sh
+├── register_phase.py
+├── reports
+├── requirements.txt
+├── scripts
+├── services
+│   ├── database.py
+│   ├── email.py
+│   └── security.py
+├── start.sh
+├── static
+│   ├── backgrounds
+│   │   └── network.mp4
+│   ├── css
+│   │   └── style.css
+│   ├── fonts
+│   ├── icons
+│   ├── img
+│   │   ├── backgrounds
+│   │   ├── icons
+│   │   └── logo.png
+│   ├── js
+│   │   └── main.js
+│   └── video
+├── storage
+├── templates
+│   ├── alerts.html
+│   ├── base.html
+│   ├── customers.html
+│   ├── dashboard.html
+│   ├── devices.html
+│   ├── login.html
+│   ├── monitoring.html
+│   ├── register.html
+│   ├── reports.html
+│   ├── security.html
+│   ├── settings.html
+│   └── vch777.html
+├── tests
+├── uploads
+├── velora_boot.sh
+└── websocket
+    └── socket.py
+
+36 directories, 76 files
