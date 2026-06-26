@@ -2,29 +2,85 @@
 
 {% block content %}
 
-<h1>Velora Enterprise Dashboard</h1>
+<h1>
 
-<div class="grid">
+Velora Enterprise Dashboard
+
+</h1>
+
+<div class="cards">
 
 <div class="card">
+
 <h2>Clientes</h2>
-<h1>0</h1>
+
+<h1>{{customers}}</h1>
+
 </div>
 
 <div class="card">
+
 <h2>Dispositivos</h2>
-<h1>0</h1>
+
+<h1>{{devices}}</h1>
+
 </div>
 
 <div class="card">
+
 <h2>Alertas</h2>
-<h1>0</h1>
+
+<h1>{{alerts}}</h1>
+
 </div>
 
 <div class="card">
-<h2>Estado</h2>
-<h1>ONLINE</h1>
+
+<h2>CPU</h2>
+
+<h1>{{cpu}}%</h1>
+
 </div>
+
+<div class="card">
+
+<h2>RAM</h2>
+
+<h1>{{ram}}%</h1>
+
+</div>
+
+<div class="card">
+
+<h2>DISCO</h2>
+
+<h1>{{disk}}%</h1>
+
+</div>
+
+</div>
+
+<div class="panel">
+
+<h2>
+
+Estado del servidor
+
+</h2>
+
+<p>
+
+Sistema:
+
+{{system}}
+
+</p>
+
+<p>
+
+Velora Enterprise ONLINE
+
+</p>
 
 </div>
 

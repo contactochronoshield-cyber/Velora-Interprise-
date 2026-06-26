@@ -1,122 +1,94 @@
-from flask import request
+from flask import Flask,render_template,jsonify
 import sqlite3
-from flask import Flask, render_template
-import sqlite3
+import psutil
+import platform
 
-app = Flask(__name__)
+app=Flask(__name__)
 
-def init_db():
-    conn = sqlite3.connect("database/velora.db")
-    cur = conn.cursor()
+DB="database/velora.db"
 
-    cur.execute("""
-    CREATE TABLE IF NOT EXISTS clients(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        company TEXT,
-        status TEXT
-    )
-    """)
+def query(sql):
 
-    cur.execute("""
-    CREATE TABLE IF NOT EXISTS nodes(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        hostname TEXT,
-        status TEXT
-    )
-    """)
+    conn=sqlite3.connect(DB)
+    conn.row_factory=sqlite3.Row
 
-    conn.commit()
+    rows=conn.execute(sql).fetchall()
+
     conn.close()
+
+    return rows
 
 @app.route("/")
 def dashboard():
-    return render_template("dashboard.html")
 
-@app.route("/clients")
-def clients():
-    return "<h1>Clients Portal</h1>"
+    return render_template(
+        "dashboard.html",
+        cpu=psutil.cpu_percent(),
+        ram=psutil.virtual_memory().percent,
+        disk=psutil.disk_usage("/").percent,
+        system=platform.system(),
+        devices=len(query("select * from devices")),
+        customers=len(query("select * from customers")),
+        alerts=len(query("select * from alerts"))
+    )
 
-@app.route("/nodes")
-def nodes():
-    return "<h1>Nodes Center</h1>"
+@app.route("/customers")
+def customers():
+    return render_template(
+        "customers.html",
+        customers=query("select * from customers")
+    )
+
+@app.route("/devices")
+def devices():
+    return render_template(
+        "devices.html",
+        devices=query("select * from devices")
+    )
+
+@app.route("/monitoring")
+def monitoring():
+    return render_template("monitoring.html")
 
 @app.route("/security")
 def security():
-    return "<h1>Security Center</h1>"
+    return render_template("security.html")
 
-@app.route("/monitoring")
-def monitoring():
-    return "<h1>Monitoring Center</h1>"
-@app.route("/register",methods=["GET","POST"])
-def register():
+@app.route("/alerts")
+def alerts():
+    return render_template(
+        "alerts.html",
+        alerts=query("select * from alerts")
+    )
 
-    if request.method=="POST":
+@app.route("/api/status")
+def api():
 
-        name=request.form["name"]
-        email=request.form["email"]
-        company=request.form["company"]
+    return jsonify({
 
-        conn=sqlite3.connect("database/velora.db")
-        cur=conn.cursor()
+        "platform":"Velora Enterprise",
 
-        cur.execute(
-        """
-        INSERT INTO registrations
-        (name,email,company,ip)
-        VALUES(?,?,?,?)
-        """,
-        (
-        name,
-        email,
-        company,
-        request.remote_addr
-        )
-        )
+        "status":"ONLINE",
 
-        cur.execute(
-        """
-        INSERT INTO audit_logs
-        (action,details)
-        VALUES(?,?)
-        """,
-        (
-        "NEW_REGISTRATION",
-        email
-        )
-        )
+        "cpu":psutil.cpu_percent(),
 
-        conn.commit()
-        conn.close()
+        "ram":psutil.virtual_memory().percent,
 
-        return """
-        <h1>Registration Complete</h1>
-        """
+        "disk":psutil.disk_usage("/").percent,
 
-    return render_template("register.html")
-if __name__ == "__main__":
-    init_db()
-    app.run(host="0.0.0.0",port=5000,debug=True)
+        "devices":len(query("select * from devices"))
 
-@app.route("/customers")
-def customers():
-    return render_template("dashboard.html")
+    })
 
-@app.route("/monitoring")
-def monitoring():
-    return render_template("dashboard.html")
+if __name__=="__main__":
 
-@app.route("/settings")
-def settings():
-    return render_template("dashboard.html")
+    app.run(
 
-@app.route("/customers")
-def customers():
-    return render_template("dashboard.html")
+        host="0.0.0.0",
 
-@app.route("/monitoring")
-def monitoring():
-    return render_template("dashboard.html")
+        port=5000,
 
-@app.route("/settings")
-def settings():
-    return render_template("dashboard.html")
+        debug=True
+
+    )
+
