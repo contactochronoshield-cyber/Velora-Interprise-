@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Clientes</h1>
+
+<div class="panel">
+
+<table>
+
+<tr>
+
+<th>ID</th>
+
+<th>Empresa</th>
+
+<th>Email</th>
+
+<th>País</th>
+
+<th>Registro</th>
+
+</tr>
+
+{% for c in customers %}
+
+<tr>
+
+<td>{{c.id}}</td>
+
+<td>{{c.company}}</td>
+
+<td>{{c.email}}</td>
+
+<td>{{c.country}}</td>
+
+<td>{{c.created_at}}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+{% endblock %}

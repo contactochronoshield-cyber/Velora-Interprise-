@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Centro de Monitoreo</h1>
+
+<div class="cards">
+
+<div class="card">
+<h2>CPU</h2>
+<h1 id="cpu">0%</h1>
+</div>
+
+<div class="card">
+<h2>RAM</h2>
+<h1 id="ram">0%</h1>
+</div>
+
+<div class="card">
+<h2>DISCO</h2>
+<h1 id="disk">0%</h1>
+</div>
+
+<div class="card">
+<h2>Estado</h2>
+<h1>ONLINE</h1>
+</div>
+
+</div>
+
+<script>
+
+setInterval(()=>{
+
+fetch("/api/status")
+
+.then(r=>r.json())
+
+.then(d=>{
+
+document.getElementById("cpu").innerHTML=d.cpu+"%";
+document.getElementById("ram").innerHTML=d.ram+"%";
+document.getElementById("disk").innerHTML=d.disk+"%";
+
+});
+
+},2000);
+
+</script>
+
+{% endblock %}

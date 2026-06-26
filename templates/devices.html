@@ -1,42 +1,47 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Velora Devices</title>
-<link rel="stylesheet" href="/static/css/style.css">
-</head>
-<body>
+{% extends "base.html" %}
 
-<nav>
-<a href="/">Dashboard</a>
-<a href="/devices">Devices</a>
-<a href="/vch777">VCH777</a>
-<a href="/alerts">Alerts</a>
-<a href="/register">Register</a>
-</nav>
+{% block content %}
 
-<div class="hero">
-<h1>Device Management Center</h1>
-<p>Customer Infrastructure Inventory</p>
+<h1>Dispositivos</h1>
+
+<div class="panel">
+
+<table>
+
+<tr>
+
+<th>ID</th>
+<th>Hostname</th>
+<th>IP</th>
+<th>Sistema</th>
+<th>CPU</th>
+<th>RAM</th>
+<th>Disco</th>
+<th>Batería</th>
+<th>Estado</th>
+
+</tr>
+
+{% for d in devices %}
+
+<tr>
+
+<td>{{d.id}}</td>
+<td>{{d.hostname}}</td>
+<td>{{d.ip}}</td>
+<td>{{d.system}}</td>
+<td>{{d.cpu}}%</td>
+<td>{{d.ram}}%</td>
+<td>{{d.disk}}%</td>
+<td>{{d.battery}}%</td>
+<td>{{d.status}}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
 </div>
 
-<div class="cards">
-
-<div class="card">
-<h2>Android Nodes</h2>
-<p>Managed by Termux Agent</p>
-</div>
-
-<div class="card">
-<h2>Linux Servers</h2>
-<p>Infrastructure Monitoring</p>
-</div>
-
-<div class="card">
-<h2>Cloud Systems</h2>
-<p>Future Integration</p>
-</div>
-
-</div>
-
-</body>
-</html>
+{% endblock %}
