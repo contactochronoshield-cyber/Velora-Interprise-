@@ -2,17 +2,33 @@
 
 {% block content %}
 
-<h1>
+<div class="hero">
 
-Velora Enterprise Dashboard
+<div>
 
-</h1>
+<h1>Velora Enterprise</h1>
+
+<p>
+Chrono Shield Systems
+</p>
+
+</div>
+
+<div class="status">
+
+<span class="online"></span>
+
+ONLINE
+
+</div>
+
+</div>
 
 <div class="cards">
 
 <div class="card">
 
-<h2>Clientes</h2>
+<h3>Clientes</h3>
 
 <h1>{{customers}}</h1>
 
@@ -20,7 +36,7 @@ Velora Enterprise Dashboard
 
 <div class="card">
 
-<h2>Dispositivos</h2>
+<h3>Dispositivos</h3>
 
 <h1>{{devices}}</h1>
 
@@ -28,7 +44,7 @@ Velora Enterprise Dashboard
 
 <div class="card">
 
-<h2>Alertas</h2>
+<h3>Alertas</h3>
 
 <h1>{{alerts}}</h1>
 
@@ -36,7 +52,7 @@ Velora Enterprise Dashboard
 
 <div class="card">
 
-<h2>CPU</h2>
+<h3>CPU</h3>
 
 <h1>{{cpu}}%</h1>
 
@@ -44,7 +60,7 @@ Velora Enterprise Dashboard
 
 <div class="card">
 
-<h2>RAM</h2>
+<h3>RAM</h3>
 
 <h1>{{ram}}%</h1>
 
@@ -52,7 +68,7 @@ Velora Enterprise Dashboard
 
 <div class="card">
 
-<h2>DISCO</h2>
+<h3>DISCO</h3>
 
 <h1>{{disk}}%</h1>
 
@@ -60,27 +76,109 @@ Velora Enterprise Dashboard
 
 </div>
 
+<div class="grid">
+
 <div class="panel">
 
-<h2>
+<h2>Servidor</h2>
 
-Estado del servidor
+<table>
 
-</h2>
+<tr>
 
-<p>
+<td>Hostname</td>
 
-Sistema:
+<td>{{hostname}}</td>
 
-{{system}}
+</tr>
 
-</p>
+<tr>
 
-<p>
+<td>Sistema</td>
 
-Velora Enterprise ONLINE
+<td>{{system}}</td>
 
-</p>
+</tr>
+
+<tr>
+
+<td>Fecha</td>
+
+<td>{{date}}</td>
+
+</tr>
+
+<tr>
+
+<td>Estado</td>
+
+<td style="color:#00ff88">
+
+ONLINE
+
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<div class="panel">
+
+<h2>Servicios</h2>
+
+<ul>
+
+<li>✔ Dashboard</li>
+
+<li>✔ API REST</li>
+
+<li>✔ Clientes</li>
+
+<li>✔ Dispositivos</li>
+
+<li>✔ Monitoreo</li>
+
+<li>✔ VCH777 Cyber</li>
+
+<li>✔ Alertas</li>
+
+<li>✔ Base de Datos</li>
+
+</ul>
+
+</div>
+
+</div>
+
+<div class="panel">
+
+<h2>Actividad reciente</h2>
+
+<table>
+
+<tr>
+
+<th>Hora</th>
+
+<th>Evento</th>
+
+<th>Estado</th>
+
+</tr>
+
+<tr>
+
+<td>{{date}}</td>
+
+<td>Velora Enterprise iniciado</td>
+
+<td>Correcto</td>
+
+</tr>
+
+</table>
 
 </div>
 
