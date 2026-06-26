@@ -1,31 +1,111 @@
 
-function clock(){
+document.addEventListener("DOMContentLoaded",function(){
+
+setTimeout(function(){
+
+let loader=document.getElementById("loader");
+
+if(loader){
+
+loader.style.display="none";
+
+}
+
+},3000);
+
+});
+
+/* ============================= */
+/* RELOJ */
+/* ============================= */
+
+function updateClock(){
 
 const now=new Date();
 
-document.getElementById("clock").innerHTML=
+const options={
 
-now.toLocaleString();
+hour:"2-digit",
+
+minute:"2-digit",
+
+second:"2-digit",
+
+day:"2-digit",
+
+month:"short",
+
+year:"numeric"
+
+};
+
+const clock=document.getElementById("clock");
+
+if(clock){
+
+clock.innerHTML=now.toLocaleString("es-CO",options);
 
 }
 
-setInterval(clock,1000);
+}
 
-clock();
+setInterval(updateClock,1000);
 
-async function refreshStatus(){
+/* ============================= */
+/* EFECTO TARJETAS */
+/* ============================= */
 
-try{
+document.addEventListener("mouseover",e=>{
 
-const r=await fetch("/api/status");
+if(e.target.classList.contains("card")){
 
-const d=await r.json();
+e.target.style.transform="translateY(-8px)";
 
-console.log(d);
-
-}catch(e){}
+e.target.style.boxShadow="0 0 35px rgba(0,191,255,.5)";
 
 }
 
-setInterval(refreshStatus,5000);
+});
+
+document.addEventListener("mouseout",e=>{
+
+if(e.target.classList.contains("card")){
+
+e.target.style.transform="translateY(0px)";
+
+e.target.style.boxShadow="0 0 15px rgba(0,191,255,.2)";
+
+}
+
+});
+
+/* ============================= */
+/* MENÚ */
+/* ============================= */
+
+document.querySelectorAll(".sidebar a").forEach(link=>{
+
+link.addEventListener("click",function(){
+
+document.querySelectorAll(".sidebar a").forEach(a=>{
+
+a.classList.remove("active");
+
+});
+
+this.classList.add("active");
+
+});
+
+});
+
+/* ============================= */
+/* MENSAJE */
+/* ============================= */
+
+console.log("VELORA ENTERPRISE");
+
+console.log("Chrono Shield Networks");
+
+console.log("Enterprise SaaS");
 

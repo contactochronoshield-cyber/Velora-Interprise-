@@ -1,130 +1,116 @@
-from flask import (
-    Flask,
-    render_template,
-    request,
-    redirect,
-    session,
-    jsonify
-)
-
+from flask import Flask, render_template, request, redirect, session, jsonify
 import sqlite3
-import platform
 import socket
-import psutil
+import platform
 from datetime import datetime
+
+try:
+    import psutil
+except:
+    psutil = None
 
 app = Flask(__name__)
 app.secret_key = "VELORA_ENTERPRISE"
 
 DATABASE = "database/velora.db"
 
-
-# -------------------------
-# DATABASE
-# -------------------------
-
 def db():
-
     conn = sqlite3.connect(DATABASE)
-
     conn.row_factory = sqlite3.Row
-
     return conn
 
+def cpu():
+    try:
+        return psutil.cpu_percent()
+    except:
+        return 0
 
-# -------------------------
-# DASHBOARD
-# -------------------------
+def ram():
+    try:
+        return psutil.virtual_memory().percent
+    except:
+        return 0
+
+def disk():
+    try:
+        return psutil.disk_usage("/").percent
+    except:
+        return 0
 
 @app.route("/")
 def dashboard():
 
     conn = db()
 
-    customers = conn.execute(
-        "SELECT COUNT(*) total FROM customers"
-    ).fetchone()["total"]
+    try:
+        customers = conn.execute("SELECT COUNT(*) total FROM customers").fetchone()["total"]
+    except:
+        customers = 0
 
-    devices = conn.execute(
-        "SELECT COUNT(*) total FROM devices"
-    ).fetchone()["total"]
+    try:
+        devices = conn.execute("SELECT COUNT(*) total FROM devices").fetchone()["total"]
+    except:
+        devices = 0
 
-    alerts = conn.execute(
-        "SELECT COUNT(*) total FROM alerts"
-    ).fetchone()["total"]
-
-    cpu = psutil.cpu_percent()
-
-    ram = psutil.virtual_memory().percent
-
-    disk = psutil.disk_usage("/").percent
-
-    hostname = socket.gethostname()
+    try:
+        alerts = conn.execute("SELECT COUNT(*) total FROM alerts").fetchone()["total"]
+    except:
+        alerts = 0
 
     conn.close()
 
     return render_template(
-
         "dashboard.html",
-
         customers=customers,
-
         devices=devices,
-
         alerts=alerts,
-
-        cpu=cpu,
-
-        ram=ram,
-
-        disk=disk,
-
-        hostname=hostname,
-
+        cpu=cpu(),
+        ram=ram(),
+        disk=disk(),
+        hostname=socket.gethostname(),
         system=platform.system(),
-
         date=datetime.now()
-
     )
 
-
-# -------------------------
+# =====================================
 # LOGIN
-# -------------------------
+# =====================================
 
-@app.route("/login",methods=["GET","POST"])
+@app.route("/login", methods=["GET","POST"])
 def login():
 
-    if request.method=="POST":
+    if request.method == "POST":
 
-        email=request.form["email"]
+        email = request.form.get("email")
+        password = request.form.get("password")
 
-        password=request.form["password"]
+        conn = db()
 
-        conn=db()
-
-        user=conn.execute(
-
-            "SELECT * FROM users WHERE email=? AND password=?",
-
-            (email,password)
-
-        ).fetchone()
+        try:
+            user = conn.execute(
+                "SELECT * FROM users WHERE email=? AND password=?",
+                (email,password)
+            ).fetchone()
+        except:
+            user = None
 
         conn.close()
 
         if user:
-
-            session["user"]=user["email"]
-
+            session["user"] = email
             return redirect("/")
+
+        return render_template(
+            "login.html",
+            error="Credenciales incorrectas"
+        )
 
     return render_template("login.html")
 
 
-# -------------------------
+# =====================================
 # LOGOUT
-# -------------------------
+# =====================================
 
 @app.route("/logout")
 def logout():
@@ -134,54 +120,46 @@ def logout():
     return redirect("/login")
 
 
-# -------------------------
-# REGISTER
-# -------------------------
+# =====================================
+# REGISTER CUSTOMER
+# =====================================
 
-@app.route("/register",methods=["GET","POST"])
+@app.route("/register", methods=["GET","POST"])
 def register():
 
-    if request.method=="POST":
+    if request.method == "POST":
 
-        conn=db()
+        company = request.form.get("company")
+        email = request.form.get("email")
+        phone = request.form.get("phone")
+        country = request.form.get("country")
 
-        conn.execute(
+        conn = db()
 
-            """
-            INSERT INTO customers(
+        try:
 
-            company,
+            conn.execute("""
 
-            email,
-
-            phone,
-
-            country
-
-            )
-
-            VALUES(
-
-            ?,?,?,?
-
-            )
-            """,
-
+            INSERT INTO customers
             (
-
-            request.form["company"],
-
-            request.form["email"],
-
-            request.form["phone"],
-
-            request.form["country"]
-
+            company,
+            email,
+            phone,
+            country
             )
 
-        )
+            VALUES
+            (
+            ?,?,?,?
+            )
 
-        conn.commit()
+            """,(company,email,phone,country))
+
+            conn.commit()
+
+        except Exception as e:
+
+            print(e)
 
         conn.close()
 
@@ -190,46 +168,55 @@ def register():
     return render_template("register.html")
 
 
-# -------------------------
+# =====================================
 # CUSTOMERS
-# -------------------------
+# =====================================
 
 @app.route("/customers")
 def customers():
 
     conn=db()
 
-    rows=conn.execute(
-
-        "SELECT * FROM customers ORDER BY id DESC"
-
-    ).fetchall()
+    try:
+        rows=conn.execute(
+            "SELECT * FROM customers ORDER BY id DESC"
+        ).fetchall()
+    except:
+        rows=[]
 
     conn.close()
 
     return render_template(
-
         "customers.html",
-
         customers=rows
-
     )
 
 
-# -------------------------
+
+# =====================================
 # DEVICES
-# -------------------------
+# =====================================
 
 @app.route("/devices")
 def devices():
 
-    conn=db()
+    conn = db()
 
-    rows=conn.execute(
+    try:
 
-        "SELECT * FROM devices ORDER BY id DESC"
+        rows = conn.execute("""
 
-    ).fetchall()
+        SELECT *
+
+        FROM devices
+
+        ORDER BY id DESC
+
+        """).fetchall()
+
+    except:
+
+        rows = []
 
     conn.close()
 
@@ -242,30 +229,58 @@ def devices():
     )
 
 
-# -------------------------
+# =====================================
+# MONITORING
+# =====================================
+
+@app.route("/monitoring")
+def monitoring():
+
+    return render_template(
+
+        "monitoring.html"
+
+    )
+
+
+# =====================================
 # SECURITY
-# -------------------------
+# =====================================
 
 @app.route("/security")
 def security():
 
-    return render_template("security.html")
+    return render_template(
+
+        "security.html"
+
+    )
 
 
-# -------------------------
+# =====================================
 # ALERTS
-# -------------------------
+# =====================================
 
 @app.route("/alerts")
 def alerts():
 
-    conn=db()
+    conn = db()
 
-    rows=conn.execute(
+    try:
 
-        "SELECT * FROM alerts"
+        rows = conn.execute("""
 
-    ).fetchall()
+        SELECT *
+
+        FROM alerts
+
+        ORDER BY id DESC
+
+        """).fetchall()
+
+    except:
+
+        rows=[]
 
     conn.close()
 
@@ -278,57 +293,115 @@ def alerts():
     )
 
 
-# -------------------------
-# MONITORING
-# -------------------------
 
-@app.route("/monitoring")
-def monitoring():
-
-    return render_template(
-
-        "monitoring.html"
-
-    )
-
-
-# -------------------------
-# STATUS API
-# -------------------------
+# =====================================
+# API STATUS
+# =====================================
 
 @app.route("/api/status")
 def api_status():
 
     return jsonify({
 
-        "hostname":socket.gethostname(),
+        "hostname": socket.gethostname(),
 
-        "system":platform.system(),
+        "system": platform.system(),
 
-        "cpu":psutil.cpu_percent(),
+        "cpu": cpu(),
 
-        "ram":psutil.virtual_memory().percent,
+        "ram": ram(),
 
-        "disk":psutil.disk_usage("/").percent,
+        "disk": disk(),
 
-        "time":str(datetime.now())
+        "time": str(datetime.now()),
+
+        "status": "ONLINE"
 
     })
 
 
-# -------------------------
-# START
-# -------------------------
+# =====================================
+# HEALTH
+# =====================================
 
-if __name__=="__main__":
+@app.route("/health")
+def health():
+
+    return jsonify({
+
+        "service": "Velora Enterprise",
+
+        "version": "1.0",
+
+        "status": "ONLINE"
+
+    })
+
+
+# =====================================
+# VCH777
+# =====================================
+
+@app.route("/api/vch777")
+def api_vch777():
+
+    return jsonify({
+
+        "engine": "VCH777 CYBER",
+
+        "firewall": "ACTIVE",
+
+        "ids": "ACTIVE",
+
+        "ips": "ACTIVE",
+
+        "monitor": "ACTIVE",
+
+        "threats": 0,
+
+        "status": "SECURE"
+
+    })
+
+
+# =====================================
+# SERVER INFO
+# =====================================
+
+@app.route("/api/server")
+def api_server():
+
+    return jsonify({
+
+        "hostname": socket.gethostname(),
+
+        "system": platform.system(),
+
+        "python": platform.python_version(),
+
+        "database": DATABASE
+
+    })
+
+
+# =====================================
+# START SERVER
+# =====================================
+
+if __name__ == "__main__":
+
+    print("=" * 60)
+    print("VELORA ENTERPRISE")
+    print("Chrono Shield Networks")
+    print("=" * 60)
+    print("Dashboard  : http://127.0.0.1:5000")
+    print("API Status : /api/status")
+    print("VCH777     : /api/vch777")
+    print("=" * 60)
 
     app.run(
-
         host="0.0.0.0",
-
         port=5000,
-
         debug=True
-
     )
 

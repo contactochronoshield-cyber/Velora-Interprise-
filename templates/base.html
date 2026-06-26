@@ -1,95 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Velora Enterprise</title>
 
+<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+
 <link rel="stylesheet" href="/static/css/style.css">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="/static/js/bootstrap.bundle.min.js"></script>
 
-<script src="/static/js/main.js" defer></script>
+<script src="/static/js/main.js"></script>
 
 </head>
 
 <body>
 
-<div class="sidebar">
+<div id="loader">
 
-<div class="brand">
+<div class="loader-logo">
 
 <h1>VELORA</h1>
 
-<p>Chrono Shield Systems</p>
+<p>Chrono Shield Networks</p>
 
-</div>
+<div class="progress">
 
-<nav>
-
-<a href="/">🏠 Dashboard</a>
-
-<a href="/customers">👥 Clientes</a>
-
-<a href="/devices">💻 Dispositivos</a>
-
-<a href="/monitoring">📊 Monitoreo</a>
-
-<a href="/security">🛡 VCH777 CYBER</a>
-
-<a href="/alerts">🚨 Alertas</a>
-
-<a href="/reports">📄 Reportes</a>
-
-<a href="/settings">⚙ Configuración</a>
-
-</nav>
-
-<div class="sidebar-footer">
-
-<p>Velora Enterprise</p>
-
-<p>Open Source Edition</p>
+<div id="progress-bar"></div>
 
 </div>
 
 </div>
 
-<div class="topbar">
+</div>
 
-<div>
+<div class="sidebar">
 
-<h2>Enterprise Control Center</h2>
+<div class="logo">
+
+<h2>VELORA</h2>
+
+<p>Enterprise</p>
 
 </div>
 
-<div class="top-right">
+<ul>
 
-<span id="clock"></span>
+<li><a href="/"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
 
-<span class="status-online">
+<li><a href="/customers"><i class="fa-solid fa-users"></i> Clientes</a></li>
 
-● ONLINE
+<li><a href="/devices"><i class="fa-solid fa-laptop"></i> Dispositivos</a></li>
 
-</span>
+<li><a href="/monitoring"><i class="fa-solid fa-heart-pulse"></i> Monitoreo</a></li>
+
+<li><a href="/security"><i class="fa-solid fa-shield-halved"></i> VCH777</a></li>
+
+<li><a href="/alerts"><i class="fa-solid fa-triangle-exclamation"></i> Alertas</a></li>
+
+<li><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Salir</a></li>
+
+</ul>
 
 </div>
 
-</div>
-
-<main class="content">
+<div class="content">
 
 {% block content %}
 
 {% endblock %}
 
-</main>
+</div>
 
 </body>
 
