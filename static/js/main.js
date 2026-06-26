@@ -1,17 +1,31 @@
 
-console.log("Velora Enterprise Loaded");
+function clock(){
 
-setInterval(function(){
+const now=new Date();
 
-fetch("/api/status")
+document.getElementById("clock").innerHTML=
 
-.then(r=>r.json())
+now.toLocaleString();
 
-.then(function(data){
+}
 
-document.title="Velora | "+data.status;
+setInterval(clock,1000);
 
-});
+clock();
 
-},5000);
+async function refreshStatus(){
+
+try{
+
+const r=await fetch("/api/status");
+
+const d=await r.json();
+
+console.log(d);
+
+}catch(e){}
+
+}
+
+setInterval(refreshStatus,5000);
 

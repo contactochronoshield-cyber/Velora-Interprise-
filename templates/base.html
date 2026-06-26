@@ -5,15 +5,17 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>Velora Enterprise</title>
 
-<link rel="stylesheet"
-href="/static/css/style.css">
+<link rel="stylesheet" href="/static/css/style.css">
 
-<script src="/static/js/main.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<script src="/static/js/main.js" defer></script>
 
 </head>
 
@@ -21,7 +23,7 @@ href="/static/css/style.css">
 
 <div class="sidebar">
 
-<div class="logo">
+<div class="brand">
 
 <h1>VELORA</h1>
 
@@ -29,37 +31,66 @@ href="/static/css/style.css">
 
 </div>
 
-<a href="/">Dashboard</a>
+<nav>
 
-<a href="/customers">Clientes</a>
+<a href="/">🏠 Dashboard</a>
 
-<a href="/devices">Dispositivos</a>
+<a href="/customers">👥 Clientes</a>
 
-<a href="/monitoring">Monitoreo</a>
+<a href="/devices">💻 Dispositivos</a>
 
-<a href="/security">VCH777 Cyber</a>
+<a href="/monitoring">📊 Monitoreo</a>
 
-<a href="/alerts">Alertas</a>
+<a href="/security">🛡 VCH777 CYBER</a>
 
-<hr>
+<a href="/alerts">🚨 Alertas</a>
 
-<a href="https://www.facebook.com/share/1DwgsugKHX/" target="_blank">
+<a href="/reports">📄 Reportes</a>
 
-Facebook Oficial
+<a href="/settings">⚙ Configuración</a>
 
-</a>
+</nav>
+
+<div class="sidebar-footer">
+
+<p>Velora Enterprise</p>
+
+<p>Open Source Edition</p>
 
 </div>
 
-<div class="main">
+</div>
+
+<div class="topbar">
+
+<div>
+
+<h2>Enterprise Control Center</h2>
+
+</div>
+
+<div class="top-right">
+
+<span id="clock"></span>
+
+<span class="status-online">
+
+● ONLINE
+
+</span>
+
+</div>
+
+</div>
+
+<main class="content">
 
 {% block content %}
 
 {% endblock %}
 
-</div>
+</main>
 
 </body>
 
 </html>
-
