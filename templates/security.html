@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>VCH777 Cyber Center</h1>
+
+<div class="cards">
+
+<div class="card">
+<h2>Firewall</h2>
+<h1>ACTIVE</h1>
+</div>
+
+<div class="card">
+<h2>Threats</h2>
+<h1>0</h1>
+</div>
+
+<div class="card">
+<h2>IPS</h2>
+<h1>RUNNING</h1>
+</div>
+
+<div class="card">
+<h2>Integrity</h2>
+<h1>100%</h1>
+</div>
+
+</div>
+
+<div class="panel">
+
+<h2>Recent Security Events</h2>
+
+<table>
+
+<tr>
+<th>Date</th>
+<th>Event</th>
+<th>Level</th>
+</tr>
+
+{% for e in [] %}
+
+<tr>
+
+<td>{{e.date}}</td>
+
+<td>{{e.event}}</td>
+
+<td>{{e.level}}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+{% endblock %}

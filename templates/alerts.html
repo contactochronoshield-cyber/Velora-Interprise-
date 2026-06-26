@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Alert Center</h1>
+
+<div class="panel">
+
+<table>
+
+<tr>
+
+<th>ID</th>
+
+<th>Title</th>
+
+<th>Severity</th>
+
+<th>Date</th>
+
+</tr>
+
+{% for a in alerts %}
+
+<tr>
+
+<td>{{a.id}}</td>
+
+<td>{{a.title}}</td>
+
+<td>{{a.severity}}</td>
+
+<td>{{a.created_at}}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+{% endblock %}
