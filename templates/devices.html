@@ -2,46 +2,158 @@
 
 {% block content %}
 
-<h1>Dispositivos</h1>
+<div class="hero">
+
+<div>
+
+<h1>Enterprise Device Manager</h1>
+
+<p>Administración centralizada de dispositivos</p>
+
+</div>
+
+</div>
+
+<div class="cards">
+
+<div class="card">
+
+<h3>Total Equipos</h3>
+
+<h1>{{devices|length}}</h1>
+
+</div>
+
+<div class="card">
+
+<h3>Online</h3>
+
+<h1 id="online">0</h1>
+
+</div>
+
+<div class="card">
+
+<h3>Offline</h3>
+
+<h1 id="offline">0</h1>
+
+</div>
+
+<div class="card">
+
+<h3>Estado</h3>
+
+<h1 style="color:#00ff88;">Activo</h1>
+
+</div>
+
+</div>
 
 <div class="panel">
 
 <table>
 
+<thead>
+
 <tr>
 
 <th>ID</th>
+
 <th>Hostname</th>
+
 <th>IP</th>
+
 <th>Sistema</th>
+
 <th>CPU</th>
+
 <th>RAM</th>
+
 <th>Disco</th>
+
 <th>Batería</th>
+
 <th>Estado</th>
 
+<th>Última conexión</th>
+
 </tr>
+
+</thead>
+
+<tbody>
 
 {% for d in devices %}
 
 <tr>
 
 <td>{{d.id}}</td>
+
 <td>{{d.hostname}}</td>
+
 <td>{{d.ip}}</td>
+
 <td>{{d.system}}</td>
+
 <td>{{d.cpu}}%</td>
+
 <td>{{d.ram}}%</td>
+
 <td>{{d.disk}}%</td>
+
 <td>{{d.battery}}%</td>
-<td>{{d.status}}</td>
+
+<td>
+
+{% if d.status=="ONLINE" %}
+
+<span style="color:#00ff88;">ONLINE</span>
+
+{% else %}
+
+<span style="color:red;">OFFLINE</span>
+
+{% endif %}
+
+</td>
+
+<td>{{d.last_seen}}</td>
 
 </tr>
 
 {% endfor %}
 
+</tbody>
+
 </table>
 
 </div>
+
+<script>
+
+let online=0;
+
+let offline=0;
+
+document.querySelectorAll("tbody tr").forEach(function(row){
+
+if(row.innerHTML.includes("ONLINE")){
+
+online++;
+
+}else{
+
+offline++;
+
+}
+
+});
+
+document.getElementById("online").innerHTML=online;
+
+document.getElementById("offline").innerHTML=offline;
+
+</script>
 
 {% endblock %}
