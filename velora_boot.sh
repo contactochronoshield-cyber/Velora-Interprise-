@@ -2,26 +2,10 @@
 
 clear
 
-echo ""
-echo "██╗   ██╗███████╗██╗      ██████╗ ██████╗  █████╗ "
-echo "██║   ██║██╔════╝██║     ██╔═══██╗██╔══██╗██╔══██╗"
-echo "██║   ██║█████╗  ██║     ██║   ██║██████╔╝███████║"
-echo "╚██╗ ██╔╝██╔══╝  ██║     ██║   ██║██╔══██╗██╔══██║"
-echo " ╚████╔╝ ███████╗███████╗╚██████╔╝██║  ██║██║  ██║"
-echo "  ╚═══╝  ╚══════╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝"
-echo ""
+echo "======================================="
+echo "         VELORA ENTERPRISE"
+echo "======================================="
 
-echo "Velora Enterprise Platform"
-echo "Chrono Shield Networks"
-echo ""
-
-for i in 10 20 30 40 50 60 70 80 90 100
-do
-printf "\rLoading Core Systems... %s%%" "$i"
-sleep 0.15
-done
-
-echo ""
-sleep 1
+python node-agent/agent.py
 
 python app.py
