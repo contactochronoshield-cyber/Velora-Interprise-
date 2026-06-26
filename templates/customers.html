@@ -2,11 +2,98 @@
 
 {% block content %}
 
-<h1>Clientes</h1>
+<div class="hero">
+
+<div>
+
+<h1>Customer Management</h1>
+
+<p>Empresas registradas en Velora Enterprise</p>
+
+</div>
+
+</div>
+
+<div class="cards">
+
+<div class="card">
+
+<h3>Total Clientes</h3>
+
+<h1>{{customers|length}}</h1>
+
+</div>
+
+<div class="card">
+
+<h3>Estado</h3>
+
+<h1 style="color:#00ff88;">Activo</h1>
+
+</div>
+
+<div class="card">
+
+<h3>Suscripciones</h3>
+
+<h1>{{customers|length}}</h1>
+
+</div>
+
+<div class="card">
+
+<h3>Base de Datos</h3>
+
+<h1>SQLite</h1>
+
+</div>
+
+</div>
 
 <div class="panel">
 
+<h2>Registrar Cliente</h2>
+
+<form action="/register" method="POST">
+
+<input
+name="company"
+placeholder="Nombre de la empresa"
+required>
+
+<input
+type="email"
+name="email"
+placeholder="Correo electrónico"
+required>
+
+<input
+name="phone"
+placeholder="Teléfono">
+
+<input
+name="country"
+placeholder="País">
+
+<button type="submit">
+
+Registrar Cliente
+
+</button>
+
+</form>
+
+</div>
+
+<br>
+
+<div class="panel">
+
+<h2>Empresas Registradas</h2>
+
 <table>
+
+<thead>
 
 <tr>
 
@@ -14,13 +101,19 @@
 
 <th>Empresa</th>
 
-<th>Email</th>
+<th>Correo</th>
+
+<th>Teléfono</th>
 
 <th>País</th>
 
 <th>Registro</th>
 
 </tr>
+
+</thead>
+
+<tbody>
 
 {% for c in customers %}
 
@@ -32,6 +125,8 @@
 
 <td>{{c.email}}</td>
 
+<td>{{c.phone}}</td>
+
 <td>{{c.country}}</td>
 
 <td>{{c.created_at}}</td>
@@ -39,6 +134,8 @@
 </tr>
 
 {% endfor %}
+
+</tbody>
 
 </table>
 
