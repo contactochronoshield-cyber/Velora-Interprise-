@@ -96,3 +96,27 @@ def register():
 if __name__ == "__main__":
     init_db()
     app.run(host="0.0.0.0",port=5000,debug=True)
+
+@app.route("/customers")
+def customers():
+    return render_template("dashboard.html")
+
+@app.route("/monitoring")
+def monitoring():
+    return render_template("dashboard.html")
+
+@app.route("/settings")
+def settings():
+    return render_template("dashboard.html")
+
+@app.route("/customers")
+def customers():
+    return render_template("dashboard.html")
+
+@app.route("/monitoring")
+def monitoring():
+    return render_template("dashboard.html")
+
+@app.route("/settings")
+def settings():
+    return render_template("dashboard.html")
